@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID TRACKER</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>DATA COVID 19 INDONESIA</h1>
+     <p>positif:</p>
+    <p>Sembuh:</p>
+    <p>Meninggal:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Provinsi</th>
+                <th>Positif</th>
+                <th>Sembuh</th>
+                <th>Meninggal</th>
+            </tr>
+        </thead>
+        <tbody id="target-table-body"></tbody>
+    </table>
+</body>
+
+<script>
+    fetch("https://indonesia-covid-19.mathdro.id/api/provinsi")
+    .then(function(response){
+        return response.json()
+    })
+    .then(function(data){
+        data.results.forEach((tempat,idx) => {
+            document.getElementById('target-table-body').innerHTML += `
+            <tr>
+                <td>${tempat.provinsi}</td>
+                <td>${tempat.kasusPosi}</td>
+                <td>${tempat.kasusSemb}</td>
+                <td>${tempat.kasusMeni}</td>
+            </tr>
+            `
+        })
+
+        // for (let i = 0; i < data.results.length; i++){
+        //     document.getElementById('target-table-body').innerHTML += `
+        //     <tr>
+        //         <td>${dataresults[i].provinsi}</td>
+        //         <td>${dataresults[i].kasusPosi}</td>
+        //         <td>${dataresults[i].kasusSemb}</td>
+        //         <td>${dataresults[i].kasusMeni}</td>
+        //     </tr>
+        //     `
+        // }
+        .catch(err => {
+        console.log(err)
+        })
+    })
+
+</script>
+</html>
