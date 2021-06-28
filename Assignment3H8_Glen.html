@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +19,11 @@
 </head>
 <body>
     <h1>DATA COVID 19 INDONESIA</h1>
-     <p>positif:</p>
-    <p>Sembuh:</p>
-    <p>Meninggal:</p>
+<div id="data-semua">
+     <p>positif: 165473</p>
+    <p>Sembuh: 1501764</p>
+    <p>Meninggal: 44358</p>
+</div>
     <table>
         <thead>
             <tr>
@@ -35,12 +38,16 @@
 </body>
 
 <script>
+
+
     fetch("https://indonesia-covid-19.mathdro.id/api/provinsi")
     .then(function(response){
         return response.json()
     })
+
     .then(function(data){
-        data.results.forEach((tempat,idx) => {
+        console.log(data)
+        data.data.forEach((tempat,idx) => {
             document.getElementById('target-table-body').innerHTML += `
             <tr>
                 <td>${tempat.provinsi}</td>
@@ -51,19 +58,6 @@
             `
         })
 
-        // for (let i = 0; i < data.results.length; i++){
-        //     document.getElementById('target-table-body').innerHTML += `
-        //     <tr>
-        //         <td>${dataresults[i].provinsi}</td>
-        //         <td>${dataresults[i].kasusPosi}</td>
-        //         <td>${dataresults[i].kasusSemb}</td>
-        //         <td>${dataresults[i].kasusMeni}</td>
-        //     </tr>
-        //     `
-        // }
-        .catch(err => {
-        console.log(err)
-        })
     })
 
 </script>
