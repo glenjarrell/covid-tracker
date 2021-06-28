@@ -19,11 +19,11 @@
 </head>
 <body>
     <h1>DATA COVID 19 INDONESIA</h1>
-<div id="data-semua">
-     <p>positif: 165473</p>
-    <p>Sembuh: 1501764</p>
-    <p>Meninggal: 44358</p>
-</div>
+
+    <p>positif: <span id="pos"></span></p>
+    <p>Sembuh: <span id="sem"></span></p>
+    <p>Meninggal: <span id="men"></span></p>
+    
     <table>
         <thead>
             <tr>
@@ -45,20 +45,33 @@
         return response.json()
     })
 
-    .then(function(data){
-        console.log(data)
-        data.data.forEach((tempat,idx) => {
-            document.getElementById('target-table-body').innerHTML += `
+    .then(render)
+    .catch(function(err){
+        console.log(err)
+    })
+
+    function render(result){
+        var arrayOfProvince = result.data
+        var positif = 0
+        var sembuh = 0
+        var meninggal = 0
+        for(var i=0; i<arrayOfProvince.length; i++){
+            positif += arrayOfProvince[i].kasusPosi
+            sembuh += arrayOfProvince[i].kasusSemb
+            meninggal += arrayOfProvince[i].kasusMeni
+            document.getElementById("target-table-body").innerHTML += `
             <tr>
-                <td>${tempat.provinsi}</td>
-                <td>${tempat.kasusPosi}</td>
-                <td>${tempat.kasusSemb}</td>
-                <td>${tempat.kasusMeni}</td>
+                <td>${arrayOfProvince[i].provinsi}</td>
+                <td>${arrayOfProvince[i].kasusPosi}</td>
+                <td>${arrayOfProvince[i].kasusSemb}</td>
+                <td>${arrayOfProvince[i].kasusMeni}</td>
             </tr>
             `
-        })
-
-    })
+        }
+        document.getElementById('pos').innerText = positif
+        document.getElementById('sem').innerText = sembuh
+        document.getElementById('men').innerText = meninggal
+    }
 
 </script>
 </html>
